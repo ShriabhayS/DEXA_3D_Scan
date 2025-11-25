@@ -1,0 +1,19 @@
+.avatar-viewer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.viewer-info {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: #aaa;
+  pointer-events: none;
+}
+
