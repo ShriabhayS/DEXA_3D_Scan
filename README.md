@@ -6,16 +6,16 @@ Convert DEXA scan PDFs into personalized 3D human avatars with body shape person
 
 - [Features](#features)
 - [Project Structure](#project-structure)
-- [Quick Start](#quick-start)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Deployment](#deployment)
-- [SMPL-X Model Setup](#smpl-x-model-setup)
-- [Testing](#testing)
-- [API Documentation](#api-documentation)
-- [Troubleshooting](#troubleshooting)
-- [Technical Details](#technical-details)
-- [Project Status](#project-status)
+- [Quick Start](#quick-start) - Get started locally
+- [Installation](#installation) - Set up on your machine
+- [Usage](#usage) - How to use (local vs production)
+- [Deployment](#deployment) - Deploy to production (Vercel + backend)
+- [SMPL-X Model Setup](#smpl-x-model-setup) - Optional: Add realistic avatars
+- [Testing](#testing) - Verify everything works
+- [API Documentation](#api-documentation) - Backend API reference
+- [Troubleshooting](#troubleshooting) - Common issues and solutions
+- [Technical Details](#technical-details) - How it works
+- [Project Status](#project-status) - What's done and what's next
 
 ## Features
 
@@ -117,15 +117,32 @@ npm run dev
 
 #### 4. Access the Application
 
+**Local Development (on your machine)**:
 - **Frontend**: http://localhost:3000
 - **Backend API**: http://localhost:8000
 - **API Documentation**: http://localhost:8000/docs
 
+**Note**: These URLs only work on your local machine. For production deployment, see the [Deployment](#deployment) section below.
+
 ## Usage
+
+### Local Development
+
+When running locally, access the application at:
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:8000
+
+### Production Deployment
+
+Once deployed (see [Deployment](#deployment) section), access the application via:
+- **Frontend**: `https://your-project.vercel.app` (your Vercel URL)
+- **Backend API**: `https://your-backend.railway.app` (your backend URL)
 
 ### Basic Workflow
 
-1. **Open the application** at http://localhost:3000
+1. **Open the application**:
+   - **Local**: http://localhost:3000
+   - **Production**: Your Vercel URL (e.g., `https://your-project.vercel.app`)
 2. **Upload a DEXA scan PDF** using the file picker
 3. **(Optional) Upload a body photo** for personalization
 4. **(Optional) Enter target body fat %** for morphing
