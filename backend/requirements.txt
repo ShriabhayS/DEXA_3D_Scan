@@ -10,4 +10,6 @@ pygltflib==1.16.2
 mediapipe==0.10.14
 pillow==10.3.0
 opencv-python==4.10.0.84
+pytest==7.4.4
+pytest-asyncio==0.21.1
 

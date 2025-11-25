@@ -16,7 +16,7 @@ from fastapi.staticfiles import StaticFiles
 from .dexa_parser import parse_pdf_bytes, DexaParserError
 from .avatar_generator import process_dexa_to_avatar
 from .personalization import refine_parameters_with_photo
-from .morphing import handle_morph_request
+from .morphing import handle_morph_request, interpolate_parameters
 from .models import (
     AvatarGenerationRequest,
     AvatarGenerationResponse,
@@ -136,10 +136,13 @@ async def generate_avatar_from_data(request: AvatarGenerationRequest):
 async def morph_avatar(request: MorphRequest):
     """
     Generate a morphing sequence between two avatar states.
+    Generates GLB files for each morph step by default.
     """
     try:
-        response = handle_morph_request(request)
+        response = handle_morph_request(request, generate_meshes=True)
         return response
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=f"Invalid morph request: {str(e)}")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
 

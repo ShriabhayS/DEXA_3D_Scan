@@ -12,9 +12,29 @@ function Controls({ avatarUrl, morphProgress, onMorphProgressChange }) {
   }
 
   const handleScreenshot = () => {
-    // Screenshot functionality would be implemented here
-    // For MVP, we'll use a simple approach
-    alert('Screenshot functionality coming soon!')
+    // Get the canvas element from the Three.js renderer
+    const canvas = document.querySelector('canvas')
+    if (!canvas) {
+      alert('Canvas not found. Please wait for the avatar to load.')
+      return
+    }
+    
+    // Convert canvas to blob and download
+    canvas.toBlob((blob) => {
+      if (!blob) {
+        alert('Failed to capture screenshot')
+        return
+      }
+      
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `avatar-screenshot-${Date.now()}.png`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      URL.revokeObjectURL(url)
+    }, 'image/png')
   }
 
   return (
