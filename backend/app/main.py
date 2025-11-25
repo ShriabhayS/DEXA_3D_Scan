@@ -58,6 +58,11 @@ async def root():
 async def parse_dexa_pdf(file: UploadFile = File(...)):
     """
     Parse a DEXA scan PDF and extract structured metrics.
+    
+    Note: This endpoint operates entirely in-memory:
+    - UploadFile.read() loads file content into memory
+    - parse_pdf_bytes() uses BytesIO (in-memory buffer)
+    - No file system operations occur, so FileNotFoundError cannot be raised
     """
     if not file.filename.endswith(".pdf"):
         raise HTTPException(status_code=400, detail="File must be a PDF")
@@ -91,6 +96,8 @@ async def generate_avatar(
         if body_photo:
             photo_path = OUTPUT_DIR / f"temp_photo_{uuid4().hex}.jpg"
             photo_bytes = await body_photo.read()
+            # OUTPUT_DIR is created at module level, so FileNotFoundError should not occur
+            # unless there's a permission issue (which would raise PermissionError instead)
             photo_path.write_bytes(photo_bytes)
             body_scale_adjustments = refine_parameters_with_photo(dexa_data, photo_path)
             # Clean up temp file
