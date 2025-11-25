@@ -46,7 +46,8 @@ function UploadForm({ onAvatarGenerated, onLoadingChange, onError }) {
         formData.append('target_body_fat_percent', parseFloat(targetBodyFat))
       }
 
-      const response = await axios.post('/api/generate-avatar', formData, {
+      const apiUrl = import.meta.env.VITE_API_URL || ''
+      const response = await axios.post(`${apiUrl}/api/generate-avatar`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

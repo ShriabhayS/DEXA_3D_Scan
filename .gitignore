@@ -11,6 +11,9 @@ env/
 *.egg-info/
 dist/
 build/
+.pytest_cache/
+.coverage
+htmlcov/
 
 # Node
 node_modules/
@@ -42,12 +45,15 @@ output/
 *.json
 !package.json
 !package-lock.json
+!tsconfig.json
 
-# Models (large files)
+# Models (large files - don't commit model files)
 models/*.pkl
 models/*.npz
 models/*.h5
 models/*.ckpt
+models/*.pt
+models/*.pth
 
 # Logs
 *.log
@@ -62,3 +68,5 @@ tmp/
 Thumbs.db
 .DS_Store
 
+# Vercel
+.vercel
