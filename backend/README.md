@@ -35,7 +35,6 @@ uvicorn backend.app.main:app --reload
 ## Notes
 
 - SMPL-X assets are not bundled; obtain them from https://smpl-x.is.tue.mpg.de/
-- The current implementation uses placeholder mapping logic so the pipeline can
-  be exercised without licensed assets. Replace TODO sections with real model
-  code once the assets are available.
+- SMPL-X model loading infrastructure is ready. When model files are available,
+  the system automatically uses them. Without models, it falls back to placeholder meshes.
 

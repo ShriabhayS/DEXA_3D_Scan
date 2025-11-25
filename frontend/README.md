@@ -73,7 +73,7 @@ File upload interface:
 Avatar interaction controls:
 - Morph progress slider
 - Download GLB button
-- Screenshot button (placeholder)
+- Screenshot button (fully implemented)
 
 ## API Integration
 
@@ -87,8 +87,8 @@ Proxy configuration in `vite.config.js` routes API calls to `http://localhost:80
 ## Development Notes
 
 - The viewer uses GLTFLoader to load GLB files
-- Morphing is currently simplified (scaling only)
-- Screenshot functionality is a placeholder
+- Morphing in viewer is simplified (scaling only) - backend supports full mesh morphing
+- Screenshot functionality is fully implemented
 - Mobile responsiveness is basic - needs enhancement for production
 
 ## Future Enhancements
