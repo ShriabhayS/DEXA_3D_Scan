@@ -16,7 +16,7 @@ from fastapi.staticfiles import StaticFiles
 from .dexa_parser import parse_pdf_bytes, DexaParserError
 from .avatar_generator import process_dexa_to_avatar
 from .personalization import refine_parameters_with_photo
-from .morphing import handle_morph_request, interpolate_parameters
+from .morphing import handle_morph_request
 from .models import (
     AvatarGenerationRequest,
     AvatarGenerationResponse,
@@ -67,17 +67,9 @@ async def parse_dexa_pdf(file: UploadFile = File(...)):
         dexa_data = parse_pdf_bytes(pdf_bytes)
         return dexa_data
     except DexaParserError as e:
-        raise HTTPException(
-            status_code=422,
-            detail=f"Failed to parse DEXA PDF. Please ensure the file is a valid DEXA scan PDF with readable text. Error: {str(e)}"
-        )
-    except FileNotFoundError as e:
-        raise HTTPException(status_code=404, detail=f"File not found: {str(e)}")
+        raise HTTPException(status_code=422, detail=f"Failed to parse DEXA PDF: {str(e)}")
     except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail=f"An unexpected error occurred while parsing the DEXA PDF. Please try again or contact support if the issue persists. Error: {str(e)}"
-        )
+        raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
 
 
 @app.post("/api/generate-avatar", response_model=AvatarGenerationResponse)
@@ -144,13 +136,10 @@ async def generate_avatar_from_data(request: AvatarGenerationRequest):
 async def morph_avatar(request: MorphRequest):
     """
     Generate a morphing sequence between two avatar states.
-    Generates GLB files for each morph step by default.
     """
     try:
-        response = handle_morph_request(request, generate_meshes=True)
+        response = handle_morph_request(request)
         return response
-    except ValueError as e:
-        raise HTTPException(status_code=422, detail=f"Invalid morph request: {str(e)}")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
 
@@ -206,4 +195,3 @@ if __name__ == "__main__":
     import uvicorn
 
     uvicorn.run(app, host="0.0.0.0", port=8000)
-
