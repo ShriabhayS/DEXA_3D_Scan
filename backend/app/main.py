@@ -67,9 +67,17 @@ async def parse_dexa_pdf(file: UploadFile = File(...)):
         dexa_data = parse_pdf_bytes(pdf_bytes)
         return dexa_data
     except DexaParserError as e:
-        raise HTTPException(status_code=422, detail=f"Failed to parse DEXA PDF: {str(e)}")
+        raise HTTPException(
+            status_code=422,
+            detail=f"Failed to parse DEXA PDF. Please ensure the file is a valid DEXA scan PDF with readable text. Error: {str(e)}"
+        )
+    except FileNotFoundError as e:
+        raise HTTPException(status_code=404, detail=f"File not found: {str(e)}")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"An unexpected error occurred while parsing the DEXA PDF. Please try again or contact support if the issue persists. Error: {str(e)}"
+        )
 
 
 @app.post("/api/generate-avatar", response_model=AvatarGenerationResponse)
